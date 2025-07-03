@@ -1598,6 +1598,7 @@ export interface Footer {
           url?: string | null;
           label: string;
         };
+        category: 'About' | 'Experience' | 'Read' | 'Watch' | 'Buy';
         id?: string | null;
       }[]
     | null;
@@ -1644,6 +1645,7 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        category?: T;
         id?: T;
       };
   updatedAt?: T;

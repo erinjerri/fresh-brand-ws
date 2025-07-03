@@ -16,6 +16,18 @@ export const Footer: GlobalConfig = {
         link({
           appearances: false,
         }),
+        {
+          name: 'category',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'About', value: 'About' },
+            { label: 'Experience', value: 'Experience' },
+            { label: 'Read', value: 'Read' },
+            { label: 'Watch', value: 'Watch' },
+            { label: 'Buy', value: 'Buy' },
+          ],
+        },
       ],
       maxRows: 6,
       admin: {
