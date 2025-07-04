@@ -4,7 +4,6 @@ import { buildConfig, PayloadRequest } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { s3Storage } from '@payloadcms/storage-s3'
 import sharp from 'sharp'
-
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Media } from './collections/Media'
@@ -20,24 +19,21 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// Use S3 storage only in production
 const isProduction = process.env.NODE_ENV === 'production'
 
 const pluginsArray = [seoPlugin({}), ...plugins]
 
-// Add S3 storage only in production
 if (isProduction) {
   pluginsArray.unshift(
     s3Storage({
       collections: {
         media: {
           prefix: 'media',
-          imageProcessor: sharp,
         },
       },
       bucket: process.env.SUPABASE_BUCKET || 'supabase-payload',
       config: {
-        endpoint: process.env.SUPABASE_ENDPOINT,
+        endpoint: process.env.SUPABASE_ENDPOINT || '',
         region: process.env.SUPABASE_REGION || 'us-east-1',
         credentials: {
           accessKeyId: process.env.SUPABASE_ACCESS_KEY_ID || '',
@@ -76,11 +72,12 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users],
   globals: [Header, Footer],
   cors: [getServerSideURL()].filter(Boolean),
-  secret: process.env.PAYLOAD_SECRET,
+  secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   plugins: pluginsArray,
+  sharp, // Enable sharp for image resizing
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {
