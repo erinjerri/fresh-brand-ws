@@ -92,6 +92,7 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        'custom-hover': '#68E1F5',
       },
       fontFamily: {
         sans: ['Satoshi', 'ui-sans-serif', 'system-ui'],
