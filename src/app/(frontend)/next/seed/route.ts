@@ -17,6 +17,11 @@ export async function POST(): Promise<Response> {
   }
 
   try {
+    // Patch: convert sessions: null to sessions: undefined if needed
+    if (user && user.sessions === null) {
+      user.sessions = undefined
+    }
+
     // Create a Payload request object to pass to the Local API for transactions
     // At this point you should pass in a user, locale, and any other context you need for the Local API
     const payloadReq = await createLocalReq({ user }, payload)
