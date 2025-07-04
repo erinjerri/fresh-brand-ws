@@ -17,13 +17,13 @@ export const Logo = (props: Props) => {
     /* eslint-disable @next/next/no-img-element */
     <img
       alt="Erin Jerri Logo"
-      width={193}
-      height={34}
+      width={40}
+      height={40}
       loading={loading}
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://github.com/erinjerri/fresh-brand-ws/blob/main/public/favicon.svg"
+      src="/favicon.svg"
     />
   )
 }
