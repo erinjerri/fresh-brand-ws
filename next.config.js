@@ -27,10 +27,20 @@ const nextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
 
+    // Add fallback for Node.js modules
+    webpackConfig.resolve.fallback = {
+      ...webpackConfig.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    }
+
     return webpackConfig
   },
   reactStrictMode: true,
   redirects,
+  // Use the new serverExternalPackages instead of the deprecated experimental.serverComponentsExternalPackages
+  serverExternalPackages: ['payload'],
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

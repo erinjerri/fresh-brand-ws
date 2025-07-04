@@ -1,12 +1,13 @@
 import type { CollectionConfig } from 'payload'
+import sharp from 'sharp'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
@@ -14,35 +15,28 @@ import { authenticated } from '../access/authenticated'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Use local storage for development, S3 for production
+const isProduction = process.env.NODE_ENV === 'production'
+
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     create: authenticated,
-    delete: authenticated,
     read: anyone,
     update: authenticated,
+    delete: authenticated,
   },
-  fields: [
-    {
-      name: 'alt',
-      type: 'text',
-      //required: true,
-    },
-    {
-      name: 'caption',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
-        },
-      }),
-    },
-  ],
   upload: {
-    // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
+    mimeTypes: ['image/*'],
+    // Use local storage for development
+    ...(isProduction
+      ? {}
+      : {
+          staticDir: path.resolve(dirname, '../../public/media'),
+          staticURL: '/media',
+        }),
     imageSizes: [
       {
         name: 'thumbnail',
@@ -77,4 +71,24 @@ export const Media: CollectionConfig = {
       },
     ],
   },
+  fields: [
+    {
+      name: 'alt',
+      type: 'text',
+      label: 'Alt Text',
+      required: false,
+    },
+    {
+      name: 'caption',
+      type: 'richText',
+      label: 'Caption',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
+    },
+  ],
 }
