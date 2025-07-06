@@ -16,7 +16,7 @@ export default async function Page() {
 
   const posts = await payload.find({
     collection: 'posts',
-    depth: 1,
+    depth: 2, // Populate media relationships
     limit: 12,
     overrideAccess: false,
     select: {

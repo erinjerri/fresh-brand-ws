@@ -99,6 +99,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
     limit: 1,
     pagination: false,
     overrideAccess: draft,
+    depth: 2, // Populate media relationships
     where: {
       slug: {
         equals: slug,

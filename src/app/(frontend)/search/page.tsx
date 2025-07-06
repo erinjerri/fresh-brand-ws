@@ -19,7 +19,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
   const posts = await payload.find({
     collection: 'search',
-    depth: 1,
+    depth: 2, // Populate media relationships
     limit: 12,
     select: {
       title: true,

@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url'
 import { buildConfig, PayloadRequest } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { s3Storage } from '@payloadcms/storage-s3'
-import sharp from 'sharp'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Media } from './collections/Media'
@@ -77,7 +76,6 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   plugins: pluginsArray,
-  sharp, // Enable sharp for image resizing
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {

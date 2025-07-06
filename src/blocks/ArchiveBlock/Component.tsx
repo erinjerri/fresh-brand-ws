@@ -28,7 +28,7 @@ export const ArchiveBlock: React.FC<
 
     const fetchedPosts = await payload.find({
       collection: 'posts',
-      depth: 1,
+      depth: 2, // Populate media relationships
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
