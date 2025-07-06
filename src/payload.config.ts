@@ -14,6 +14,7 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import sharp from 'sharp'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -86,4 +87,5 @@ export default buildConfig({
     },
     tasks: [],
   },
+  sharp,
 })
