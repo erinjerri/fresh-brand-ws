@@ -1,13 +1,10 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
 import React from 'react'
-import { Mail, Facebook, Linkedin, Github, Youtube, Book } from 'lucide-react'
+import { Mail, Facebook, Github, Book } from 'lucide-react'
 
 import type { Footer } from '@/payload-types'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
 
 const categories = ['About', 'Experience', 'Read', 'Watch', 'Buy']
 
@@ -16,15 +13,6 @@ export async function Footer() {
   const navItems: Footer['navItems'] = footerData?.navItems || []
 
   const grouped = categories.map((cat) => navItems.filter((item) => item.category === cat))
-
-  // Social links to inject under specific columns
-  const extraLinks = [
-    null, // About
-    null, // Experience
-    null, // Read
-    null, // Watch
-    null, // Buy
-  ]
 
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">

@@ -2,13 +2,14 @@
 
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import Image from 'next/image'
 
 import type { Props as MediaProps } from '../types'
 
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const ImageMedia: React.FC<MediaProps> = (props) => {
-  const { alt, className, fill, imgClassName, onClick, onLoad, resource, size = 'medium' } = props
+  const { alt, fill, imgClassName, onClick, onLoad, resource, size = 'medium' } = props
 
   // Type guard to ensure resource is a populated media object
   if (!resource || typeof resource !== 'object') {
@@ -40,12 +41,16 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   }
 
   return (
-    <img
+    <Image
       alt={alt || resourceAlt || ''}
       className={cn(imgClassName, fill && 'absolute inset-0 w-full h-full object-cover')}
       onClick={onClick}
       onLoad={onLoad}
       src={imageUrl}
+      {...(fill
+        ? { fill: true }
+        : { width: resource?.width || 800, height: resource?.height || 600 })}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   )
 }

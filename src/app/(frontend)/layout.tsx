@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { cn } from '@/utilities/ui'
 import React from 'react'
 
 import { Footer } from '@/Footer/Component'
@@ -14,7 +13,7 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled } = await draftMode()
+  await draftMode()
 
   return (
     <html className="font-sans" lang="en" suppressHydrationWarning>

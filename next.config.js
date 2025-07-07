@@ -35,12 +35,22 @@ const nextConfig = {
       tls: false,
     }
 
+    // Handle Sharp for Vercel deployment
+    if (process.env.NODE_ENV === 'production') {
+      webpackConfig.externals = webpackConfig.externals || []
+      webpackConfig.externals.push('sharp')
+    }
+
     return webpackConfig
   },
   reactStrictMode: true,
   redirects,
   // Use the new serverExternalPackages instead of the deprecated experimental.serverComponentsExternalPackages
   serverExternalPackages: ['payload'],
+  // Add experimental settings for better Vercel compatibility
+  experimental: {
+    serverComponentsExternalPackages: ['payload'],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
