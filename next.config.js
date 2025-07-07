@@ -20,16 +20,24 @@ const nextConfig = {
       }),
     ],
   },
-  webpack: (webpackConfig) => {
-    webpackConfig.resolve.extensionAlias = {
+  webpack: (config, { isServer }) => {
+    // Suppress the warning for prettier
+    config.ignoreWarnings = [
+      {
+        module: /node_modules\/prettier\/index\.mjs$/,
+        message: /Critical dependency: the request of a dependency is an expression/,
+      },
+    ]
+
+    config.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
 
     // Add fallback for Node.js modules
-    webpackConfig.resolve.fallback = {
-      ...webpackConfig.resolve.fallback,
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
       fs: false,
       net: false,
       tls: false,
@@ -37,20 +45,37 @@ const nextConfig = {
 
     // Handle Sharp for Vercel deployment
     if (process.env.NODE_ENV === 'production') {
-      webpackConfig.externals = webpackConfig.externals || []
-      webpackConfig.externals.push('sharp')
+      config.externals = config.externals || []
+      config.externals.push('sharp')
     }
 
-    return webpackConfig
+    // Configure Sass loader to suppress deprecation warnings
+    config.module.rules.forEach((rule) => {
+      if (rule.oneOf) {
+        rule.oneOf.forEach((oneOfRule) => {
+          if (oneOfRule.use && Array.isArray(oneOfRule.use)) {
+            oneOfRule.use.forEach((useItem) => {
+              if (useItem.loader && useItem.loader.includes('sass-loader')) {
+                useItem.options = {
+                  ...useItem.options,
+                  sassOptions: {
+                    ...useItem.options?.sassOptions,
+                    quietDeps: true, // Suppress deprecation warnings from dependencies
+                  },
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+
+    return config
   },
   reactStrictMode: true,
   redirects,
   // Use the new serverExternalPackages instead of the deprecated experimental.serverComponentsExternalPackages
   serverExternalPackages: ['payload'],
-  // Add experimental settings for better Vercel compatibility
-  experimental: {
-    serverComponentsExternalPackages: ['payload'],
-  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
