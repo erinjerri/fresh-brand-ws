@@ -40,7 +40,6 @@ export async function GET(
 
   try {
     user = await payload.auth({
-      req: req as PayloadRequest,
       headers: req.headers,
     })
   } catch (error) {
