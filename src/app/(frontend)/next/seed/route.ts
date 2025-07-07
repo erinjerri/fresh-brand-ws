@@ -1,8 +1,8 @@
 import { createLocalReq, getPayload } from 'payload'
-import { seed } from '@/endpoints/seed'
+import { seed } from '@/endpoints/seed/index.js'
 import config from '@payload-config'
 import { headers } from 'next/headers'
-import type { User } from '@/payload-types'
+import type { User } from 'payload'
 
 export const maxDuration = 60 // This function can run for a maximum of 60 seconds
 

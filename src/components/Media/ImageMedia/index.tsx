@@ -9,7 +9,16 @@ import type { Props as MediaProps } from '../types'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const ImageMedia: React.FC<MediaProps> = (props) => {
-  const { alt, fill, imgClassName, onClick, onLoad, resource, size = 'medium' } = props
+  const {
+    alt,
+    fill,
+    imgClassName,
+    onClick,
+    onLoad,
+    resource,
+    size = 'medium',
+    className: _className,
+  } = props
 
   // Type guard to ensure resource is a populated media object
   if (!resource || typeof resource !== 'object') {

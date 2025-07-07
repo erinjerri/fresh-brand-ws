@@ -15,7 +15,7 @@
     "incremental": true,
     "jsx": "preserve",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "types": ["node"],
     "resolveJsonModule": true,
     "sourceMap": true,
