@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "framework": "nextjs",
@@ -12,5 +13,11 @@
   },
   "env": {
     "NODE_OPTIONS": "--no-deprecation"
-  }
+  },
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@vercel/static-build"
+    }
+  ]
 }
