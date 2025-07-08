@@ -91,6 +91,9 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
-    ]
+    ],
+    "overrides": {
+      "prettier": "3.5.3"
+    }
   }
 }
