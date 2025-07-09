@@ -1,17 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next",
-      "config": {
-        "buildCommand": "pnpm vercel-build",
-        "installCommand": "pnpm install --frozen-lockfile"
-      }
-    }
-  ],
-  "outputDirectory": ".next",
-  "framework": "nextjs",
   "functions": {
     "src/app/(payload)/api/[...slug]/route.ts": {
       "maxDuration": 30
@@ -23,5 +11,7 @@
   "env": {
     "NODE_OPTIONS": "--no-deprecation",
     "ENABLE_EXPERIMENTAL_COREPACK": "1"
-  }
+  },
+  "framework": "nextjs",
+  "outputDirectory": ".next"
 }
