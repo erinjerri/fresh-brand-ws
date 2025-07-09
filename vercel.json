@@ -12,7 +12,9 @@
     }
   },
   "env": {
-    "NODE_OPTIONS": "--no-deprecation"
+    "NODE_OPTIONS": "--no-deprecation",
+     "ENABLE_EXPERIMENTAL_COREPACK": "1",
+     "PNPM_STORE_DIR": "/tmp/.pnpm-store"
   },
   "builds": [
     {
