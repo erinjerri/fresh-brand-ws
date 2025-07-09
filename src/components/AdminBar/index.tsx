@@ -37,9 +37,11 @@ export const AdminBar: React.FC<{
   const { adminBarProps } = props || {}
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
-  const collection = (
-    collectionLabels[segments?.[1] as keyof typeof collectionLabels] ? segments[1] : 'pages'
-  ) as keyof typeof collectionLabels
+  const safeSegments = segments ?? []
+  const validCollections = Object.keys(collectionLabels) as Array<keyof typeof collectionLabels>
+  const collection = validCollections.includes(safeSegments[1] as any)
+    ? (safeSegments[1] as keyof typeof collectionLabels)
+    : 'pages'
   const router = useRouter()
 
   const onAuthChange = React.useCallback((user: PayloadMeUser) => {

@@ -1,23 +1,17 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
 import React from 'react'
 import { Mail, Facebook, Github, Book } from 'lucide-react'
-
 import type { Footer } from '@/payload-types'
-
 import { CMSLink } from '@/components/Link'
 
 const categories = ['About', 'Experience', 'Read', 'Watch', 'Buy']
 
-export async function Footer() {
-  const footerData = (await getCachedGlobal('footer', 1)()) as Footer
-  const navItems: Footer['navItems'] = footerData?.navItems || []
-
+export function Footer({ data }: { data: Footer }) {
+  const navItems = data?.navItems || []
   const grouped = categories.map((cat) => navItems.filter((item) => item.category === cat))
 
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
       <div className="container py-12 flex flex-col gap-8 items-center">
-        {/* Subscription Form */}
         <form className="w-full max-w-md flex flex-col sm:flex-row gap-4 items-center justify-center">
           <input
             type="email"
@@ -31,8 +25,6 @@ export async function Footer() {
             Subscribe
           </button>
         </form>
-
-        {/* Social Icons */}
         <div className="flex gap-8 justify-center items-center text-white text-2xl">
           <a
             href="https://bit.ly/ErinJerriFBFanP"
@@ -62,8 +54,6 @@ export async function Footer() {
             <Book size={32} />
           </a>
         </div>
-
-        {/* Footer Links in Columns with Category Titles and Social Links */}
         <div className="w-full flex flex-col md:flex-row justify-center gap-12">
           {grouped.map((colLinks, idx) => (
             <div key={idx} className="flex flex-col items-center md:items-start min-w-[140px]">
@@ -71,13 +61,11 @@ export async function Footer() {
                 {categories[idx]}
               </span>
               {colLinks.map((item, i) => (
-                <CMSLink className="text-white mb-3 text-base" key={i} {...item.link} />
+                <CMSLink key={i} className="text-white mb-3 text-base" {...item.link} />
               ))}
             </div>
           ))}
         </div>
-
-        {/* Copyright and Made with */}
         <div className="w-full flex flex-col md:flex-row justify-between items-center text-xs text-white/70 mt-8 gap-2">
           <span>2023 Cypher Realities Inc. All rights reserved.</span>
           <span>

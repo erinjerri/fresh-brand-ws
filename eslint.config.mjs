@@ -10,11 +10,11 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...compat.extends('next/core-web-vitals', 'plugin:@typescript-eslint/recommended', 'standard'),
   {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-empty-interface': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'warn',
@@ -28,10 +28,16 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      semi: ['warn', 'always'],
+      quotes: ['warn', 'single'],
     },
   },
   {
-    ignores: ['.next/'],
+    ignores: ['.next/', 'dist/', 'node_modules/'],
   },
 ]
 

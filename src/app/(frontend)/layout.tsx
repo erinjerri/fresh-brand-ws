@@ -1,19 +1,20 @@
 import type { Metadata } from 'next'
-
 import React from 'react'
-
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
-
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import type { Footer as FooterType, Header as HeaderType } from '@/payload-types'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await draftMode()
+  const headerData = await getCachedGlobal('header', 1)()
+  const footerData = await getCachedGlobal('footer', 1)()
 
   return (
     <html className="font-sans" lang="en" suppressHydrationWarning>
@@ -21,18 +22,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body>
         <Providers>
-          <Header />
+          <Header data={headerData as HeaderType} />
           {children}
-          <Footer />
+          <Footer data={footerData as FooterType} />
         </Providers>
       </body>
     </html>

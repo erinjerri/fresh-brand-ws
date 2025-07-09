@@ -1,7 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "buildCommand": "pnpm vercel-build",
+        "installCommand": "pnpm install --frozen-lockfile"
+      }
+    }
+  ],
+  "outputDirectory": ".next",
   "framework": "nextjs",
   "functions": {
     "src/app/(payload)/api/[...slug]/route.ts": {
@@ -13,7 +22,6 @@
   },
   "env": {
     "NODE_OPTIONS": "--no-deprecation",
-    "ENABLE_EXPERIMENTAL_COREPACK": "1",
-    "PNPM_STORE_DIR": "/tmp/.pnpm-store"
+    "ENABLE_EXPERIMENTAL_COREPACK": "1"
   }
 }
