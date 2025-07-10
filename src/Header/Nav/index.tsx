@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 
-import type { Header as HeaderType } from '@/payload-types'
+import type { Header as HeaderType } from '@/payload-types';
 
-import { CMSLink } from '@/components/Link'
-import Link from 'next/link'
-import { SearchIcon } from 'lucide-react'
+import { CMSLink } from '@/components/Link';
+import Link from 'next/link';
+import { SearchIcon } from 'lucide-react';
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
-  const navItems = data?.navItems || []
+  const navItems = data?.navItems || [];
 
   return (
     <nav className="flex gap-x-12 items-center justify-center w-full">
@@ -26,5 +26,5 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
         <SearchIcon className="w-5 text-primary" />
       </Link>
     </nav>
-  )
-}
+  );
+};

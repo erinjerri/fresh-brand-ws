@@ -1,27 +1,27 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { buildConfig, PayloadRequest } from 'payload'
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { s3Storage } from '@payloadcms/storage-s3'
-import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
-import { Media } from './collections/Media'
-import { Categories } from './collections/Categories'
-import { Users } from './collections/Users'
-import { Header } from './Header/config'
-import { Footer } from './Footer/config'
-import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
-import { getServerSideURL } from './utilities/getURL'
-import { seoPlugin } from '@payloadcms/plugin-seo'
-import sharp from 'sharp'
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { buildConfig, PayloadRequest } from 'payload';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { s3Storage } from '@payloadcms/storage-s3';
+import { Pages } from './collections/Pages';
+import { Posts } from './collections/Posts';
+import { Media } from './collections/Media';
+import { Categories } from './collections/Categories';
+import { Users } from './collections/Users';
+import { Header } from './Header/config';
+import { Footer } from './Footer/config';
+import { plugins } from './plugins';
+import { defaultLexical } from '@/fields/defaultLexical';
+import { getServerSideURL } from './utilities/getURL';
+import { seoPlugin } from '@payloadcms/plugin-seo';
+import sharp from 'sharp';
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production';
 
-const pluginsArray = [seoPlugin({}), ...plugins]
+const pluginsArray = [seoPlugin({}), ...plugins];
 
 if (isProduction) {
   pluginsArray.unshift(
@@ -42,7 +42,7 @@ if (isProduction) {
         forcePathStyle: true,
       },
     }),
-  )
+  );
 }
 
 export default buildConfig({
@@ -80,12 +80,12 @@ export default buildConfig({
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {
-        if (req.user) return true
-        const authHeader = req.headers.get('authorization')
-        return authHeader === `Bearer ${process.env.CRON_SECRET}`
+        if (req.user) return true;
+        const authHeader = req.headers.get('authorization');
+        return authHeader === `Bearer ${process.env.CRON_SECRET}`;
       },
     },
     tasks: [],
   },
   sharp,
-})
+});

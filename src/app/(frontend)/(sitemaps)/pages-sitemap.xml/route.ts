@@ -1,17 +1,17 @@
 // @ts-ignore
-import { getServerSideSitemap } from 'next-sitemap'
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { unstable_cache } from 'next/cache'
+import { getServerSideSitemap } from 'next-sitemap';
+import { getPayload } from 'payload';
+import config from '@payload-config';
+import { unstable_cache } from 'next/cache';
 
 const getPagesSitemap = unstable_cache(
   async () => {
     try {
-      const payload = await getPayload({ config })
+      const payload = await getPayload({ config });
       const SITE_URL =
         process.env.NEXT_PUBLIC_SERVER_URL ||
         process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-        'http://localhost:3000'
+        'http://localhost:3000';
 
       const results = await payload.find({
         collection: 'pages',
@@ -29,9 +29,9 @@ const getPagesSitemap = unstable_cache(
           slug: true,
           updatedAt: true,
         },
-      })
+      });
 
-      const dateFallback = new Date().toISOString()
+      const dateFallback = new Date().toISOString();
 
       const defaultSitemap = [
         {
@@ -42,7 +42,7 @@ const getPagesSitemap = unstable_cache(
           loc: `${SITE_URL}/posts`,
           lastmod: dateFallback,
         },
-      ]
+      ];
 
       const sitemap = results.docs
         ? results.docs
@@ -51,16 +51,16 @@ const getPagesSitemap = unstable_cache(
               return {
                 loc: page?.slug === 'home' ? `${SITE_URL}/` : `${SITE_URL}/${page?.slug}`,
                 lastmod: page.updatedAt || dateFallback,
-              }
+              };
             })
-        : []
+        : [];
 
-      return [...defaultSitemap, ...sitemap]
+      return [...defaultSitemap, ...sitemap];
     } catch (error) {
-      console.warn('Failed to generate pages sitemap:', error)
+      console.warn('Failed to generate pages sitemap:', error);
       // Return basic sitemap if database is not available
-      const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
-      const dateFallback = new Date().toISOString()
+      const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
+      const dateFallback = new Date().toISOString();
 
       return [
         {
@@ -71,17 +71,17 @@ const getPagesSitemap = unstable_cache(
           loc: `${SITE_URL}/posts`,
           lastmod: dateFallback,
         },
-      ]
+      ];
     }
   },
   ['pages-sitemap'],
   {
     tags: ['pages-sitemap'],
   },
-)
+);
 
 export async function GET() {
-  const sitemap = await getPagesSitemap()
+  const sitemap = await getPagesSitemap();
 
-  return getServerSideSitemap(sitemap)
+  return getServerSideSitemap(sitemap);
 }

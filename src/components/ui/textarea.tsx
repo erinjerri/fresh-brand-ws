@@ -1,5 +1,5 @@
-import { cn } from '@/utilities/ui'
-import * as React from 'react'
+import { cn } from '@/utilities/ui';
+import * as React from 'react';
 
 const Textarea: React.FC<
   {
@@ -15,7 +15,7 @@ const Textarea: React.FC<
       ref={ref}
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Textarea }
+export { Textarea };

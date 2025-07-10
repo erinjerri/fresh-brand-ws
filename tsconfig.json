@@ -31,7 +31,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["webpack-env"]
   },
   "include": [
     "**/*.ts",

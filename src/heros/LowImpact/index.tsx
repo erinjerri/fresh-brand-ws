@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import type { Page } from '@/payload-types'
+import type { Page } from '@/payload-types';
 
-import RichText from '@/components/RichText'
+import RichText from '@/components/RichText';
 
 type LowImpactHeroType =
   | {
@@ -21,5 +21,5 @@ export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText 
         {children || (richText && <RichText data={richText} enableGutter={false} />)}
       </div>
     </div>
-  )
-}
+  );
+};

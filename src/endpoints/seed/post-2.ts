@@ -1,5 +1,5 @@
-import { RequiredDataFromCollectionSlug } from 'payload'
-import type { PostArgs } from './post-1'
+import { RequiredDataFromCollectionSlug } from 'payload';
+import type { PostArgs } from './post-1';
 
 export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
   heroImage,
@@ -133,7 +133,7 @@ export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
                 format: 0,
                 mode: 'normal',
                 style: '',
-                text: "Throughout history, regions across the globe have faced the devastating impact of natural disasters, the turbulence of political unrest, and the challenging ripples of economic downturns. In these moments of profound crisis, an often-underestimated force emerges: the indomitable resilience of the human spirit. These aren't just tales of mere survival, but stories of communities forging bonds, uniting with a collective purpose, and demonstrating an innate ability to overcome.",
+                text: 'Throughout history, regions across the globe have faced the devastating impact of natural disasters, the turbulence of political unrest, and the challenging ripples of economic downturns. In these moments of profound crisis, an often-underestimated force emerges: the indomitable resilience of the human spirit. These aren\'t just tales of mere survival, but stories of communities forging bonds, uniting with a collective purpose, and demonstrating an innate ability to overcome.',
                 version: 1,
               },
             ],
@@ -190,7 +190,7 @@ export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
                           format: 0,
                           mode: 'normal',
                           style: '',
-                          text: "This content above is completely dynamic using custom layout building blocks configured in the CMS. This can be anything you'd like from rich text and images, to highly designed, complex components.",
+                          text: 'This content above is completely dynamic using custom layout building blocks configured in the CMS. This can be anything you\'d like from rich text and images, to highly designed, complex components.',
                           version: 1,
                         },
                       ],
@@ -228,5 +228,5 @@ export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
     },
     relatedPosts: [], // this is populated by the seed script
     title: 'Global Gaze: Beyond the Headlines',
-  }
-}
+  };
+};

@@ -1,5 +1,5 @@
-import tailwindcssAnimate from 'tailwindcss-animate'
-import typography from '@tailwindcss/typography'
+import tailwindcssAnimate from 'tailwindcss-animate';
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -148,6 +148,6 @@ const config = {
       }),
     },
   },
-}
+};
 
-export default config
+export default config;

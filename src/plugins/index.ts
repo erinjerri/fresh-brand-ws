@@ -1,28 +1,28 @@
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
-import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
-import { searchPlugin } from '@payloadcms/plugin-search'
-import { Plugin } from 'payload'
-import { revalidateRedirects } from '@/hooks/revalidateRedirects'
-import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
-import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { searchFields } from '@/search/fieldOverrides'
-import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder';
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs';
+import { redirectsPlugin } from '@payloadcms/plugin-redirects';
+import { seoPlugin } from '@payloadcms/plugin-seo';
+import { searchPlugin } from '@payloadcms/plugin-search';
+import { Plugin } from 'payload';
+import { revalidateRedirects } from '@/hooks/revalidateRedirects';
+import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types';
+import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical';
+import { searchFields } from '@/search/fieldOverrides';
+import { beforeSyncWithSearch } from '@/search/beforeSync';
 
-import { Page, Post } from '@/payload-types'
-import { getServerSideURL } from '@/utilities/getURL'
+import { Page, Post } from '@/payload-types';
+import { getServerSideURL } from '@/utilities/getURL';
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
-}
+  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template';
+};
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
-  const url = getServerSideURL()
+  const url = getServerSideURL();
 
-  return doc?.slug ? `${url}/${doc.slug}` : url
-}
+  return doc?.slug ? `${url}/${doc.slug}` : url;
+};
 
 export const plugins: Plugin[] = [
   redirectsPlugin({
@@ -37,10 +37,10 @@ export const plugins: Plugin[] = [
               admin: {
                 description: 'You will need to rebuild the website when changing this field.',
               },
-            }
+            };
           }
-          return field
-        })
+          return field;
+        });
       },
       hooks: {
         afterChange: [revalidateRedirects],
@@ -71,13 +71,13 @@ export const plugins: Plugin[] = [
                     ...rootFeatures,
                     FixedToolbarFeature(),
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                  ]
+                  ];
                 },
               }),
-            }
+            };
           }
-          return field
-        })
+          return field;
+        });
       },
     },
   }),
@@ -86,9 +86,9 @@ export const plugins: Plugin[] = [
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
       fields: ({ defaultFields }) => {
-        return [...defaultFields, ...searchFields]
+        return [...defaultFields, ...searchFields];
       },
     },
   }),
   payloadCloudPlugin(),
-]
+];

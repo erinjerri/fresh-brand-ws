@@ -1,13 +1,13 @@
-import React from 'react'
-import { Mail, Facebook, Github, Book } from 'lucide-react'
-import type { Footer } from '@/payload-types'
-import { CMSLink } from '@/components/Link'
+import React from 'react';
+import { Mail, Facebook, Github, Book } from 'lucide-react';
+import type { Footer } from '@/payload-types';
+import { CMSLink } from '@/components/Link';
 
-const categories = ['About', 'Experience', 'Read', 'Watch', 'Buy']
+const categories = ['About', 'Experience', 'Read', 'Watch', 'Buy'];
 
 export function Footer({ data }: { data: Footer }) {
-  const navItems = data?.navItems || []
-  const grouped = categories.map((cat) => navItems.filter((item) => item.category === cat))
+  const navItems = data?.navItems || [];
+  const grouped = categories.map((cat) => navItems.filter((item) => item.category === cat));
 
   return (
     <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
@@ -74,5 +74,5 @@ export function Footer({ data }: { data: Footer }) {
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -212,7 +212,7 @@ export const countryOptions = [
     value: 'CR',
   },
   {
-    label: "Cote D'Ivoire",
+    label: 'Cote D\'Ivoire',
     value: 'CI',
   },
   {
@@ -460,7 +460,7 @@ export const countryOptions = [
     value: 'KI',
   },
   {
-    label: "Democratic People's Republic of Korea",
+    label: 'Democratic People\'s Republic of Korea',
     value: 'KP',
   },
   {
@@ -480,7 +480,7 @@ export const countryOptions = [
     value: 'KG',
   },
   {
-    label: "Lao People's Democratic Republic",
+    label: 'Lao People\'s Democratic Republic',
     value: 'LA',
   },
   {
@@ -979,4 +979,4 @@ export const countryOptions = [
     label: 'Zimbabwe',
     value: 'ZW',
   },
-]
+];

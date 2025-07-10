@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { cn } from '@/utilities/ui'
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
-import * as React from 'react'
+import { cn } from '@/utilities/ui';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import { Check } from 'lucide-react';
+import * as React from 'react';
 
 const Checkbox: React.FC<
   {
@@ -22,6 +22,6 @@ const Checkbox: React.FC<
       <Check className="h-4 w-4" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
-)
+);
 
-export { Checkbox }
+export { Checkbox };

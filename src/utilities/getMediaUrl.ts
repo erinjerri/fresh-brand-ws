@@ -8,11 +8,11 @@
  */
 export function getMediaUrl(path: string, cacheTag?: string): string {
   // Always use the public base URL
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || ''
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
 
-  let url = `${baseUrl}${path}`
+  let url = `${baseUrl}${path}`;
   if (cacheTag) {
-    url += `?updatedAt=${cacheTag}`
+    url += `?updatedAt=${cacheTag}`;
   }
-  return url
+  return url;
 }

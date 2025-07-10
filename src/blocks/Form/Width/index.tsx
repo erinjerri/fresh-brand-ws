@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 
 export const Width: React.FC<{
   children: React.ReactNode
@@ -9,5 +9,5 @@ export const Width: React.FC<{
     <div className={className} style={{ maxWidth: width ? `${width}%` : undefined }}>
       {children}
     </div>
-  )
-}
+  );
+};

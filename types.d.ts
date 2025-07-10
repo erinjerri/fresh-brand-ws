@@ -1,4 +1,4 @@
-import type { Sharp } from 'sharp'
+import type { Sharp } from 'sharp';
 
 export type SharpDependency = typeof import('sharp') | Sharp
 

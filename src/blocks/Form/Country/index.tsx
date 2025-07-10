@@ -1,20 +1,20 @@
-import type { CountryField } from '@payloadcms/plugin-form-builder/types'
-import type { Control, FieldErrorsImpl } from 'react-hook-form'
+import type { CountryField } from '@payloadcms/plugin-form-builder/types';
+import type { Control, FieldErrorsImpl } from 'react-hook-form';
 
-import { Label } from '@/components/ui/label'
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import React from 'react'
-import { Controller } from 'react-hook-form'
+} from '@/components/ui/select';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 
-import { Error } from '../Error'
-import { Width } from '../Width'
-import { countryOptions } from './options'
+import { Error } from '../Error';
+import { Width } from '../Width';
+import { countryOptions } from './options';
 
 export const Country: React.FC<
   CountryField & {
@@ -38,7 +38,7 @@ export const Country: React.FC<
         defaultValue=""
         name={name}
         render={({ field: { onChange, value } }) => {
-          const controlledValue = countryOptions.find((t) => t.value === value)
+          const controlledValue = countryOptions.find((t) => t.value === value);
 
           return (
             <Select onValueChange={(val) => onChange(val)} value={controlledValue?.value}>
@@ -51,15 +51,15 @@ export const Country: React.FC<
                     <SelectItem key={value} value={value}>
                       {label}
                     </SelectItem>
-                  )
+                  );
                 })}
               </SelectContent>
             </Select>
-          )
+          );
         }}
         rules={{ required }}
       />
       {errors[name] && <Error name={name} />}
     </Width>
-  )
-}
+  );
+};

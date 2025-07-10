@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { cn } from '@/utilities/ui'
-import * as SelectPrimitive from '@radix-ui/react-select'
-import { Check, ChevronDown, ChevronUp } from 'lucide-react'
-import * as React from 'react'
+import { cn } from '@/utilities/ui';
+import * as SelectPrimitive from '@radix-ui/react-select';
+import { Check, ChevronDown, ChevronUp } from 'lucide-react';
+import * as React from 'react';
 
-const Select = SelectPrimitive.Root
+const Select = SelectPrimitive.Root;
 
-const SelectGroup = SelectPrimitive.Group
+const SelectGroup = SelectPrimitive.Group;
 
-const SelectValue = SelectPrimitive.Value
+const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger: React.FC<
   { ref?: React.Ref<HTMLButtonElement> } & React.ComponentProps<typeof SelectPrimitive.Trigger>
@@ -27,7 +27,7 @@ const SelectTrigger: React.FC<
       <ChevronDown className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
-)
+);
 
 const SelectScrollUpButton: React.FC<
   { ref?: React.Ref<HTMLDivElement> } & React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>
@@ -39,7 +39,7 @@ const SelectScrollUpButton: React.FC<
   >
     <ChevronUp className="h-4 w-4" />
   </SelectPrimitive.ScrollUpButton>
-)
+);
 
 const SelectScrollDownButton: React.FC<
   { ref?: React.Ref<HTMLDivElement> } & React.ComponentProps<
@@ -53,7 +53,7 @@ const SelectScrollDownButton: React.FC<
   >
     <ChevronDown className="h-4 w-4" />
   </SelectPrimitive.ScrollDownButton>
-)
+);
 
 const SelectContent: React.FC<
   {
@@ -85,7 +85,7 @@ const SelectContent: React.FC<
       <SelectScrollDownButton />
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
-)
+);
 
 const SelectLabel: React.FC<
   { ref?: React.Ref<HTMLDivElement> } & React.ComponentProps<typeof SelectPrimitive.Label>
@@ -95,7 +95,7 @@ const SelectLabel: React.FC<
     ref={ref}
     {...props}
   />
-)
+);
 
 const SelectItem: React.FC<
   { ref?: React.Ref<HTMLDivElement>; value: string } & React.ComponentProps<
@@ -118,7 +118,7 @@ const SelectItem: React.FC<
 
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
-)
+);
 
 const SelectSeparator: React.FC<
   { ref?: React.Ref<HTMLDivElement> } & React.ComponentProps<typeof SelectPrimitive.Separator>
@@ -128,7 +128,7 @@ const SelectSeparator: React.FC<
     ref={ref}
     {...props}
   />
-)
+);
 
 export {
   Select,
@@ -141,4 +141,4 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-}
+};

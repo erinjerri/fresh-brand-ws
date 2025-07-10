@@ -1,4 +1,4 @@
-import { RequiredDataFromCollectionSlug } from 'payload'
+import { RequiredDataFromCollectionSlug } from 'payload';
 
 export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
   confirmationMessage: {
@@ -67,7 +67,7 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
           version: 1,
         },
       },
-      subject: "You've received a new message.",
+      subject: 'You\'ve received a new message.',
     },
   ],
   fields: [
@@ -108,4 +108,4 @@ export const contactForm: RequiredDataFromCollectionSlug<'forms'> = {
   submitButtonLabel: 'Submit',
   title: 'Contact Form',
   updatedAt: '2023-01-12T21:47:41.374Z',
-}
+};

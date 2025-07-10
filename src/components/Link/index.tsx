@@ -1,9 +1,9 @@
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { cn } from '@/utilities/ui'
-import Link from 'next/link'
-import React from 'react'
+import { Button, type ButtonProps } from '@/components/ui/button';
+import { cn } from '@/utilities/ui';
+import Link from 'next/link';
+import React from 'react';
 
-import type { Page, Post } from '@/payload-types'
+import type { Page, Post } from '@/payload-types';
 
 type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']
@@ -31,19 +31,19 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     reference,
     size: sizeFromProps,
     url,
-  } = props
+  } = props;
 
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
       ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
           reference.value.slug
         }`
-      : url
+      : url;
 
-  if (!href) return null
+  if (!href) return null;
 
-  const size = appearance === 'link' ? 'clear' : sizeFromProps
-  const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+  const size = appearance === 'link' ? 'clear' : sizeFromProps;
+  const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {};
 
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
@@ -56,7 +56,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {label && label}
         {children && children}
       </Link>
-    )
+    );
   }
 
   return (
@@ -70,5 +70,5 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         {children && children}
       </Link>
     </Button>
-  )
-}
+  );
+};

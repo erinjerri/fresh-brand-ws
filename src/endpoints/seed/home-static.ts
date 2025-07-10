@@ -1,4 +1,4 @@
-import type { RequiredDataFromCollectionSlug } from 'payload'
+import type { RequiredDataFromCollectionSlug } from 'payload';
 
 // Used for pre-seeded content so that the homepage is not empty
 export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
@@ -85,4 +85,4 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
   },
   title: 'Home',
   layout: [],
-}
+};
