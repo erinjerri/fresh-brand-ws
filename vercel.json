@@ -13,5 +13,6 @@
     "ENABLE_EXPERIMENTAL_COREPACK": "1"
   },
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "installCommand": "pnpm install --no-frozen-lockfile"
 }

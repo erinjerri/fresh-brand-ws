@@ -1,89 +1,65 @@
-export const dynamic = 'force-dynamic'
-import type { Metadata } from 'next/types'
+import type { Metadata } from 'next'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
-import PageClient from './page.client'
-import { notFound } from 'next/navigation'
+import { draftMode } from 'next/headers'
+import React, { cache } from 'react'
 
-export const revalidate = 600
+import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
+import { generateMeta } from '@/utilities/generateMeta'
+import PageClient from '../../page.client'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import type { Post } from '@/payload-types'
+import { CollectionArchive } from '@/components/CollectionArchive'
 
 type Args = {
   params: Promise<{
-    pageNumber: string
+    pageNumber?: string
   }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
-  const { pageNumber } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
-
-  const sanitizedPageNumber = Number(pageNumber)
-
-  if (!Number.isInteger(sanitizedPageNumber)) notFound()
-
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 2, // Populate media relationships
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+export default async function PostsPage({ params: paramsPromise }: Args) {
+  const { isEnabled: draft } = await draftMode()
+  const { pageNumber = '1' } = await paramsPromise
+  const page = parseInt(pageNumber, 10)
+  const posts = await queryPosts({ page })
 
   return (
-    <div className="pt-24 pb-24">
+    <article className="pt-16 pb-24">
       <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
-        </div>
-      </div>
 
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
+      {/* Allows redirects for valid pages too */}
+      <PayloadRedirects disableNotFound url={`/posts/page/${pageNumber}`} />
+
+      {draft && <LivePreviewListener />}
 
       <CollectionArchive posts={posts.docs} />
-
-      <div className="container">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
-    </div>
+    </article>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { pageNumber } = await paramsPromise
-  return {
-    title: `Payload Website Template Posts Page ${pageNumber || ''}`,
-  }
+  const { pageNumber = '1' } = await paramsPromise
+  const page = parseInt(pageNumber, 10)
+  const posts = await queryPosts({ page })
+  return generateMeta({ doc: posts.docs[0] })
 }
 
-export async function generateStaticParams() {
+const queryPosts = cache(async ({ page }: { page: number }) => {
+  const { isEnabled: draft } = await draftMode()
+
   const payload = await getPayload({ config: configPromise })
-  const { totalDocs } = await payload.count({
+
+  const result = await payload.find({
     collection: 'posts',
-    overrideAccess: false,
+    draft,
+    limit: 10,
+    overrideAccess: draft,
+    page,
+    depth: 2, // Populate media relationships
+    sort: '-publishedAt',
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
-
-  const pages: { pageNumber: string }[] = []
-
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push({ pageNumber: String(i) })
-  }
-
-  return pages
-}
+  return result
+})
