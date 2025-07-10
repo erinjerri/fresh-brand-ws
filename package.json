@@ -21,7 +21,7 @@
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=--no-deprecation pnpm exec playwright test --config=playwright.config.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
-    "vercel-build": "pnpm install --legacy-peer-deps && next build",
+    "vercel-build": "pnpm install --legacy-peer-deps && pnpm build",
     "reset": "pnpm run clean && pnpm install && pnpm build",
     "clean": "rm -rf node_modules .next pnpm-lock.yaml && echo '🧹 Cleaned folders. Reinstalling...'"
   },
