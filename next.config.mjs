@@ -1,9 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack(config) {
-    config.resolve.modules.push(new URL('./src', import.meta.url).pathname);
-    return config;
+  experimental: {
+    reactCompiler: true, // React Compiler for React 19
   },
-};
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/api/media/file/**',
+      },
+    ],
+  },
+  webpack(config) {
+    // Allow absolute imports from ./src
+    config.resolve.modules.push(new URL('./src', import.meta.url).pathname)
 
-export default nextConfig;
+    // Suppress Prettier dynamic import warning
+    config.module.exprContextCritical = false
+
+    // Ignore "Critical dependency: the request of a dependency is an expression" warnings
+    config.ignoreWarnings = [/Critical dependency: the request of a dependency is an expression/]
+
+    return config
+  },
+}
+
+export default nextConfig

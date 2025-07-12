@@ -32,7 +32,8 @@
         "name": "next"
       }
     ],
-    "types": ["webpack-env"]
+    "types": [],
+    "typeRoots": ["./node_modules/@types", "./node_modules/payload"]
   },
   "include": [
     "**/*.ts",

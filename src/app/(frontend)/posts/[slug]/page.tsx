@@ -1,43 +1,23 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
-import { PayloadRedirects } from '@/components/PayloadRedirects'
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
-import RichText from '@/components/RichText'
+import { RelatedPosts } from '@/blocks/RelatedPosts/Component';
+import { PayloadRedirects } from '@/components/PayloadRedirects';
+import configPromise from '@payload-config';
+import { getPayload } from 'payload';
+import { draftMode } from 'next/headers';
+import React, { cache } from 'react';
+import RichText from '@/components/RichText';
 
-import type { Post } from '@/payload-types'
+import type { Post } from '@/payload-types';
 
-import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
-import PageClient from './page.client'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { PostHero } from '@/heros/PostHero';
+import { generateMeta } from '@/utilities/generateMeta';
+import PageClient from './page.client';
+import { LivePreviewListener } from '@/components/LivePreviewListener';
 
 export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const posts = await payload.find({
-      collection: 'posts',
-      draft: false,
-      limit: 1000,
-      overrideAccess: false,
-      pagination: false,
-      select: {
-        slug: true,
-      },
-    })
-
-    const params = posts.docs.map(({ slug }) => {
-      return { slug }
-    })
-
-    return params
-  } catch (error) {
-    console.warn('Failed to generate static params for posts:', error)
-    return []
-  }
+  // Temporarily disable static generation to avoid database schema issues
+  return [];
 }
 
 type Args = {
@@ -47,12 +27,12 @@ type Args = {
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode()
-  const { slug = '' } = await paramsPromise
-  const url = '/posts/' + slug
-  const post = await queryPostBySlug({ slug })
+  const { isEnabled: draft } = await draftMode();
+  const { slug = '' } = await paramsPromise;
+  const url = '/posts/' + slug;
+  const post = await queryPostBySlug({ slug });
 
-  if (!post) return <PayloadRedirects url={url} />
+  if (!post) return <PayloadRedirects url={url} />;
 
   return (
     <article className="pt-16 pb-16">
@@ -77,21 +57,21 @@ export default async function Post({ params: paramsPromise }: Args) {
         </div>
       </div>
     </article>
-  )
+  );
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
-  const post = await queryPostBySlug({ slug })
+  const { slug = '' } = await paramsPromise;
+  const post = await queryPostBySlug({ slug });
 
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post });
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
+  const { isEnabled: draft } = await draftMode();
 
   try {
-    const payload = await getPayload({ config: configPromise })
+    const payload = await getPayload({ config: configPromise });
 
     const result = await payload.find({
       collection: 'posts',
@@ -105,11 +85,11 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
           equals: slug,
         },
       },
-    })
+    });
 
-    return result.docs?.[0] || null
+    return result.docs?.[0] || null;
   } catch (error) {
-    console.warn(`Failed to fetch post with slug "${slug}":`, error)
-    return null
+    console.warn(`Failed to fetch post with slug "${slug}":`, error);
+    return null;
   }
-})
+});

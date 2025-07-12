@@ -15,31 +15,44 @@ import { defaultLexical } from '@/fields/defaultLexical';
 import { getServerSideURL } from './utilities/getURL';
 import { seoPlugin } from '@payloadcms/plugin-seo';
 import sharp from 'sharp';
+import type { Field } from 'payload';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+const updatedMedia = {
+  ...Media,
+  fields: [
+    ...(Media.fields || []),
+    {
+      name: 'prefix',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
+    } as Field, // Cast it to Payload’s Field type
+  ],
+};
+
 const pluginsArray = [seoPlugin({}), ...plugins];
 
 if (isProduction) {
   pluginsArray.unshift(
     s3Storage({
-      collections: {
-        media: {
-          prefix: 'media',
-        },
-      },
-      bucket: process.env.SUPABASE_BUCKET || 'supabase-payload',
+      bucket: process.env.SUPABASE_BUCKET || 'fallback-bucket',
       config: {
-        endpoint: process.env.SUPABASE_ENDPOINT || '',
-        region: process.env.SUPABASE_REGION || 'us-east-1',
+        endpoint: process.env.SUPABASE_ENDPOINT,
+        region: process.env.SUPABASE_REGION,
         credentials: {
-          accessKeyId: process.env.SUPABASE_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.SUPABASE_SECRET_ACCESS_KEY || '',
+          accessKeyId: process.env.SUPABASE_ACCESS_KEY_ID || 'fallback-access-key',
+          secretAccessKey: process.env.SUPABASE_SECRET_ACCESS_KEY || 'fallback-secret-key',
         },
         forcePathStyle: true,
+      },
+      collections: {
+        media: true,
       },
     }),
   );
@@ -69,10 +82,11 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, updatedMedia, Categories, Users],
   globals: [Header, Footer],
   cors: [getServerSideURL()].filter(Boolean),
   secret: process.env.PAYLOAD_SECRET || '',
+  serverURL: process.env.VERCEL_URL || getServerSideURL() || 'http://localhost:3000',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

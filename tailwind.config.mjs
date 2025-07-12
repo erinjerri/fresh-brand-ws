@@ -1,5 +1,5 @@
-import tailwindcssAnimate from 'tailwindcss-animate';
-import typography from '@tailwindcss/typography';
+import tailwindcssAnimate from 'tailwindcss-animate'
+import typography from '@tailwindcss/typography'
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -25,6 +25,7 @@ const config = {
     'bg-success/30',
     'border-warning',
     'bg-warning/30',
+    'bg-background',
   ],
   theme: {
     container: {
@@ -148,6 +149,6 @@ const config = {
       }),
     },
   },
-};
+}
 
-export default config;
+export default config
